@@ -29,3 +29,17 @@ def update_signup(conn, id:int, details:Dict[str, Any]) -> bool:
         cur.close()
         print(e)
     return False
+
+@connect_db
+def delete_signup(conn, id) -> bool:
+    try:
+        cur = conn.cursor()
+        sql = 'delete from signup where id = %s'
+        values = (id, )
+        cur.execute(sql, values)
+        cur.close()
+        return True
+    except Exception as e:
+        cur.close()
+        print(e)
+    return False
