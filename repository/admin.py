@@ -15,3 +15,18 @@ def insert_admin(conn, id:int, fname:str, lname:str, age:int, position:str, emp_
         cur.close()
         print(e)
     return False
+
+@connect_db
+def update_admin(conn, id:int, details:Dict[str, Any]):
+    try:
+        cur = conn.cursor()
+        params = ['{} = %s'.format(key) for key in details.keys()]
+        values = tuple(details.values())
+        sql = 'update admin set {} where id = {}'.format(', '.join(params), id)
+        cur.execute(sql, values)
+        cur.close()
+        return True
+    except Exception as e:
+        cur.close()
+        print(e)
+    return False
