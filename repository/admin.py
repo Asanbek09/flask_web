@@ -44,3 +44,16 @@ def delete_admin(conn, id:int):
         cur.close()
         print(e)
     return False
+
+@connect_db
+def select_all_admin(conn):
+    try:
+        cur = conn.cursor()
+        sql = 'select * from admin'
+        cur.execute(sql)
+        admins = cur.fetchall()
+        cur.close()
+        return admins
+    except Exception as e:
+        print(e)
+    return None
