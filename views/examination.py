@@ -1,5 +1,5 @@
 from __main__ import app
-from flask import request, redirect, render_template
+from flask import request, redirect, render_template, url_for, make_response
 
 @app.route('/exam/score', methods=['GET', 'POST'])
 def record_score():
