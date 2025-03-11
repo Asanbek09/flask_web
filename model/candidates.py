@@ -44,3 +44,39 @@ class CounselorUser:
         self.utype = kwargs.get('utype', 0)
         self.firstname = kwargs.get('firstname', '')
         self.lastname = kwargs.get('lastname', '')
+        self.cid = kwargs.get('cid', '')
+
+class PatientUser:
+    id:int
+    age:int
+    gender:str
+    cstatus:str
+    address:str
+    mobile:str
+    occupation:str
+    nationality:str
+    cid:str
+    counsel_started:date
+    counsel_ended:date
+    username:str
+    password:str
+    utype:int
+    firstname:str
+    lastname:str
+    def __init__(self, **kwargs):
+        self.id = kwargs.get('id', 0)
+        self.age = kwargs.get('age', 0)
+        self.gender = kwargs.get('gender', '')
+        self.cstatus = kwargs.get('cstatus', '')
+        self.address = kwargs.get('address', '')
+        self.mobile = kwargs.get('mobile', '')
+        self.occupation = kwargs.get('occupation', '')
+        self.nationality = kwargs.get('nationality', '')
+        self.cid = kwargs.get('cid', '')
+        self.counsel_started = kwargs.get('counsel_started', None)
+        self.counsel_ended = kwargs.get('counsel_ended', None)
+        self.username = kwargs.get('username', '')
+        self.password = kwargs.get('password', '')
+        self.utype = kwargs.get('utype', 0)
+        self.firstname = kwargs.get('firstname', '')
+        self.lastname = kwargs.get('lastname', '')
