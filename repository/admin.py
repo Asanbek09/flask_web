@@ -57,3 +57,30 @@ def select_all_admin(conn):
     except Exception as e:
         print(e)
     return None
+
+@connect_db
+def select_single_admin(conn, id:int):
+    try:
+        cur = conn.cursor()
+        sql = 'select * from admin where id = {}'.format(id)
+        cur.execute(sql)
+        admins = cur.fetchall()
+        admin = admins[0]
+        cur.close()
+        return admin
+    except Exception as e:
+        print(e)
+    return None
+
+@connect_db
+def select_admin_join_user(conn):
+    try:
+        cur = conn.cursor()
+        sql = 'select * from admin a inner join all_user u on a.id = u.id'
+        cur.execute(sql)
+        users = cur.fetchall()
+        cur.close()
+        return users
+    except Exception as e:
+        print(e)
+    return None
