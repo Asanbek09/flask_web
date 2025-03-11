@@ -1,6 +1,6 @@
 from flask import Flask
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='pages')
 
 @app.route('/', methods=['GET'])
 def index():
@@ -12,6 +12,12 @@ def home():
     <p>This is a template of a web-based counseling
     application where counselors can … … …</em>
     </body></html>'''
+
+
+@app.route('signup/form', methods=['POST'])
+def signup_users_form():
+    resp = Response(response= render_template('add_signup.html'), status=200, content_type="text.html")
+    return resp
 
 if __name__ == '__main__':
     app.run(debug=True)
