@@ -14,3 +14,18 @@ def insert_signup(conn, user:str, passw:str, utype:str, fname:str, lname:str, ci
         cur.close()
         print(e)
     return False
+
+@connect_db
+def update_signup(conn, id:int, details:Dict[str, Any]) -> bool:
+    try:
+        cur = conn.cursor()
+        params = ['{} = %s'.format(key) for key in details.key()]
+        values = tuple(details.values())
+        sql = 'UPDATE signup SET {} where id = {}'.format(','.join(params), id)
+        cur.execute(sql, values)
+        cur.close()
+        return True
+    except Exception as e:
+        cur.close()
+        print(e)
+    return False
