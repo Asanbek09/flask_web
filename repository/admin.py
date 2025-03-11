@@ -30,3 +30,17 @@ def update_admin(conn, id:int, details:Dict[str, Any]):
         cur.close()
         print(e)
     return False
+
+@connect_db
+def delete_admin(conn, id:int):
+    try:
+        cur = conn.cursor()
+        sql = 'delete from admin where id = %s'
+        values = (id, )
+        cur.execute(sql, values)
+        cur.close()
+        return True
+    except Exception as e:
+        cur.close()
+        print(e)
+    return False
