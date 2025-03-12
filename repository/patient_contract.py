@@ -71,3 +71,30 @@ def select_all_patient_contract(conn):
     except Exception as e:
         print(e)
     return None
+
+@connect_db
+def select_all_unpaid_patient(conn):
+    try:
+        cur = conn.cursor()
+        sql = 'select * from patient_contract where amount_due <> 0'
+        cur.execute(sql)
+        scores = cur.fetchall()
+        cur.close()
+        return scores
+    except Exception as e:
+        print(e)
+    return None
+
+@connect_db
+def select_single_patient_contract(conn, id:int):
+    try:
+        cur = conn.cursor()
+        sql = 'select * from patient_contract where id = {}'.format(id)
+        cur.execute(sql)
+        scores = cur.fetchall()
+        score = scores[0]
+        cur.close()
+        return score
+    except Exception as e:
+        print(e)
+    return None
