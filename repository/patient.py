@@ -44,3 +44,30 @@ def delete_patient(conn, id:int):
         cur.close()
         print(e)
     return False
+
+@connect_db
+def select_all_patient(conn):
+    try:
+        cur = conn.cursor()
+        sql = 'select * from patient'
+        cur.execute(sql)
+        patients = cur.fetchall()
+        cur.close()
+        return patients
+    except Exception as e:
+        print(e)
+    return None
+
+@connect_db
+def select_single_patient(conn, id:int):
+    try:
+        cur = conn.cursor()
+        sql = 'select * from patinet where id = {}'.format(id)
+        cur.execute(sql)
+        patients = cur.fetchall()
+        cur.close()
+        patient = patients[0]
+        return patient
+    except Exception as e:
+        print(e)
+    return None
