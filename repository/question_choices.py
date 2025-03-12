@@ -44,3 +44,30 @@ def delete_question_choice(conn, id:int):
         cur.close()
         print(e)
     return False
+
+@connect_db
+def select_all_question_choice(conn):
+    try:
+        cur = conn.cursor() 
+        sql = 'select * from question_choices'
+        cur.execute(sql)
+        quest_choices = cur.fetchall()
+        cur.close()
+        return quest_choices
+    except Exception as e:
+        print(e)
+    return None 
+
+@connect_db
+def select_single_question_choice(conn, id:int):
+    try:
+        cur = conn.cursor() 
+        sql = 'select * from question_choices where id = {}'.format(id)
+        cur.execute(sql)
+        quest_choices = cur.fetchall()
+        choice = quest_choices[0]
+        cur.close()
+        return choice
+    except Exception as e:
+        print(e)
+    return None
