@@ -16,3 +16,31 @@ def insert_patient(conn, id:int, fname:str, lname:str, age:int, gender:str, civi
         print(e)
     return False
 
+@connect_db
+def update_patient(conn, id:int, details:Dict[str, Any]):
+    try:
+        cur = conn.cursor()
+        params = ['{} = %s'.format(key) for key in details.keys()]
+        values = tuple(details.values())
+        sql = 'update patient set {} where id = {}'.format(', '.join(params), id)
+        cur.execute(sql, values)
+        cur.close()
+        return True
+    except Exception as e:
+        cur.close()
+        print(e)
+    return False
+
+@connect_db
+def delete_patient(conn, id:int):
+    try:
+        cur = conn.cursor()
+        sql = 'delete from patient where id = %s'
+        values = (id, )
+        cur.execute(sql, values)
+        cur.close()
+        return True
+    except Exception as e:
+        cur.close()
+        print(e)
+    return False
