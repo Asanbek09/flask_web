@@ -32,7 +32,7 @@ def update_patient_contract(conn, id:int, details:Dict[str, Any]):
     return False
 
 @connect_db
-def delete_patient_contract(conn, id:int):
+def delete_patient_contract_id(conn, id:int):
     try:
         cur = conn.cursor()
         sql = 'delete patient_contract where id = %s'
@@ -44,3 +44,30 @@ def delete_patient_contract(conn, id:int):
         cur.close()
         print(e)
     return False
+
+@connect_db
+def delete_patient_contract_pid(conn, pid:int):
+    try:
+        cur = conn.cursor()
+        sql = 'delete from patient_contract where pid = %s'
+        values = (pid, )
+        cur.exeute(sql, values)
+        cur.close()
+        return True
+    except Exception as e:
+        cur.close()
+        print(e)
+    return False
+
+@connect_db
+def select_all_patient_contract(conn):
+    try:
+        cur = conn.cursor()
+        sql = 'select * from patient_contract'
+        cur.execute(sql)
+        scores = cur.fetchall()
+        cur.close()
+        return scores
+    except Exception as e:
+        print(e)
+    return None
