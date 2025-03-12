@@ -44,3 +44,30 @@ def delete_counselor(conn, id:int):
         cur.close()
         print(e)
     return False
+
+@connect_db
+def select_all_counselor(conn):
+    try:
+        cur = conn.cursor()
+        sql = 'select * from counselor'
+        cur.execute(sql)
+        counselors = cur.fetchall()
+        cur.close()
+        return counselors
+    except Exception as e:
+        print(e)
+    return None
+
+@connect_db
+def select_single_counselor(conn, id:int):
+    try:
+        cur = conn.cursor()
+        sql = 'select * from counselor where id = {}'.format(id)
+        cur.execute(sql)
+        counselors = cur.fetchall()
+        counselor = counselors[0]
+        cur.close()
+        return counselor
+    except Exception as e:
+        print(e)
+    return None
