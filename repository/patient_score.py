@@ -44,6 +44,32 @@ def delete_patient_score(conn, id:int):
         print(e)
     return False
 
+@connect_db
+def select_all_patient_score(conn):
+    try:
+        cur = conn.cursor()
+        sql = 'select * from patient_score'
+        cur.execute(sql)
+        scores = cur.fetchall()
+        cur.close()
+        return scores
+    except Exception as e:
+        print(e)
+    return None
+
+@connect_db
+def select_single_patient_score(conn, id:int):
+    try:
+        cur = conn.cursor()
+        sql = 'select * from patient_score whhre id = {}'.format(id)
+        cur.execute(sql)
+        scores = cur.fetchall()
+        score = scores[0]
+        return score
+    except Exception as e:
+        print(e)
+    return None
+
 def record_patient_exam(formdata:Dict[str, Any]) -> bool:
     try:
         pct = round((formdata['score'] / formdata['total']) * 100, 2)
