@@ -44,3 +44,44 @@ def delete_user(conn, id:int) -> bool:
         cur.close()
         print(e)
     return False
+
+@connect_db
+def select_all_user(conn) -> List[Any]:
+    try:
+        cur = conn.cursor()
+        sql = 'select * from users'
+        cur.execute(sql)
+        users = cur.fetchall()
+        cur.close()
+        return users
+    except Exception as e:
+        print(e)
+    return None
+
+@connect_db
+def select_single_user(conn, id:int) -> Any:
+    try:
+        cur = conn.cursor()
+        sql = 'select * from users where id = {}'.format(id)
+        cur.execute(sql)
+        users = cur.fetchall()
+        user = users[0]
+        cur.close()
+        return user
+    except Exception as e:
+        print(e)
+    return None
+
+@connect_db
+def validate_user(conn, user, passwd) -> bool:
+    try:
+        cur = conn.cursor()
+        sql = "select * from users where username = '{}' and password = '{}'".format(user, passwd)
+        cur.execute(sql)
+        users = cur.fetchall()
+        cur.close()
+        if len(users) > 0:
+            return True
+    except Exception as e:
+        print(e)
+    return False
