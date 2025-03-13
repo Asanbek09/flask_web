@@ -44,3 +44,43 @@ def delete_question_pool(conn, id:int):
         cur.close()
         print(e)
     return False
+
+@connect_db
+def select_all_question_pool(conn, id:int):
+    try:
+        cur = conn.cursor()
+        sql = 'select * fron question_pool'
+        cur.execute(sql)
+        question_pools = cur.fetchall()
+        cur.close()
+        return question_pools
+    except Exception as e:
+        print(e)
+    return None
+
+@connect_db
+def select_single_question_pool(conn, id:int):
+    try:
+        cur = conn.cursor()
+        sql = 'select * from question_pool where id = {}'.format(id)
+        cur.execute(sql)
+        question_pools = cur.fetchall()
+        question_pool = question_pools[0]
+        cur.close()
+        return question_pool
+    except Exception as e:
+        print(e)
+    return None
+
+@connect_db
+def get_current_id(conn):
+    try:
+        cur = conn.cursor()
+        sql = 'select * from question_pool order by id DESC limit 1'
+        cur.execute(sql)
+        curr_id = cur.fetchall()
+        cur.close()
+        return curr_id
+    except Exception as e:
+        print(e)
+    return None
