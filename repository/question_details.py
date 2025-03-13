@@ -44,3 +44,30 @@ def delete_question_details(conn, id:int):
         cur.close()
         print(e)
     return False
+
+@connect_db
+def select_all_question_details(conn):
+    try:
+        cur = conn.cursor()
+        sql = 'select * from question_details'
+        cur.execute(sql)
+        question_details = cur.fetchall()
+        cur.close()
+        return question_details
+    except Exception as e:
+        print(e)
+    return None
+
+@connect_db
+def select_single_question_details(conn, id:int):
+    try:
+        cur = conn.cursor()
+        sql = 'select * from question_details where id = {}'.format(id)
+        cur.execute(sql)
+        question_details = cur.fetchall()
+        detail = question_details[0]
+        cur.close()
+        return detail
+    except Exception as e:
+        print(e)
+    return None
