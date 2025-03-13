@@ -43,3 +43,30 @@ def delete_question_subjective(conn, id:int):
         cur.close()
         print(e)
     return False
+
+@connect_db
+def select_all_question_subjective(conn):
+    try:
+        cur = conn.cursor()
+        sql = 'select * from question_subjective'
+        cur.execute(sql)
+        subjectives = cur.fetchall()
+        cur.close()
+        return subjectives
+    except Exception as e:
+        print(e)
+    return None
+
+@connect_db
+def select_single_question_subjective(conn, id:int):
+    try:
+        cur = conn.cursor()
+        sql = 'select * from question_subjective where id = {}'.format(id)
+        cur.execute(sql)
+        subjectives = cur.fetchall()
+        answer = subjectives[0]
+        cur.close()
+        return answer
+    except Exception as e:
+        print(e)
+    return None
