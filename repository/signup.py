@@ -43,3 +43,30 @@ def delete_signup(conn, id) -> bool:
         cur.close()
         print(e)
     return False
+
+@connect_db
+def select_all_signup(conn) -> List[Any]:
+    try:
+        cur = conn.cursor()
+        sql = 'select * from signup'
+        cur.execute(sql)
+        signups = cur.fetchall()
+        cur.close()
+        return signups
+    except Exception as e:
+        print(e)
+    return None
+
+@connect_db
+def select_single_signup(conn, id:int) -> Any:
+    try:
+        cur = conn.cursor()
+        sql = 'select * from signup where id = {}'.format(id)
+        cur.execute(sql)
+        signups = cur.fetchall()
+        signup = signups[0]
+        cur.close()
+        return signup
+    except Exception as e:
+        print(e)
+    return None
