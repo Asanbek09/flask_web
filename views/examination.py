@@ -27,6 +27,15 @@ def assign_exam():
             return redirect(url_for('redirect_success_exam', message=task))
         else:
             return redirect('/exam/task/error')
+        
+@app.route('/exam/success', methods=['GET'])
+def redirect_success_exam():
+    message = request.args['message']
+    return render_template('exam/redirect_success_view.html', message=message)
+
+@app.route('exam/task/error', methods=['GET'])
+def redirect_error_exam():
+    return render_template('error/redirect_exam_error.html')
 
 @app.route('/exam/score', methods=['GET', 'POST'])
 def record_score():
