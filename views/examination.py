@@ -68,6 +68,22 @@ def add_exam_item():
             return redirect(url_for('redirect_success_exam', message=task))
         else:
             return redirect('/exam/task/error')
+        
+@app.route('/exam/details/list')
+def report_exam_list():
+    exams = list_exam_details()
+    response = make_response(render_template('exam/list_exams.html', exams=exams), 200)
+    headers = dict()
+    headers['Content-Type'] = 'application/vnd.ms-excel'
+    headers['Content-Disposition'] = 'attachment;filename=question.xls'
+    response.headers = headers
+    return response
+
+@app.route('/exam/passers/list/<float:rate>/<uuid:docId>')
+def report_exam_passers(rate:float, docId:uuid4 = None):
+    exams = list_passing_scores(rate)
+    response = make_response(render_template('exam/list_exam_passers.html', exams=exams, docId=docId), 200)
+    return response
 
 @app.route('/exam/score', methods=['GET', 'POST'])
 def record_score():
