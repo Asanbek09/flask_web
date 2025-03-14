@@ -37,6 +37,38 @@ def redirect_success_exam():
 def redirect_error_exam():
     return render_template('error/redirect_exam_error.html')
 
+@app.route('exa,/item/add', methods=['GET', 'POST'])
+def add_exam_item():
+    if request.method == 'GET':
+        qids = list_qid()
+        return render_template('exam/add_exam_form.html', qids=qids)
+    else:
+        qid = int(request.form['id'])
+        qtype = int(request.form['question_type'])
+        result = False
+        if qtype == 1:
+            question = request.form['mchoiceq']
+            print(question)
+            choices = dict()
+            choices["a"] = request.form['choice1']
+            choices["b"] = request.form['choice2']
+            choices["c"] = request.form['choice3']
+            choices["d"] = request.form['choice4']
+            print(choices)
+            answers = request.form.getlist('answers')
+            print(answers)
+            result = add_exam_items(qid=qid, qtype=qtype, question=question, params=choices, answers=answers)
+        elif qtype == 2:
+            question = request.form['essayq']
+            answer = request.form['ans_essay']
+            result = add_exam_items(qid=qid, qtype=qtype, question=question, ans_essay=answer)
+        if result:
+            task = "adding items to exam {}".format(qid)
+            url = "/exam/item/add"
+            return redirect(url_for('redirect_success_exam', message=task))
+        else:
+            return redirect('/exam/task/error')
+
 @app.route('/exam/score', methods=['GET', 'POST'])
 def record_score():
     if request.method == 'GET':
