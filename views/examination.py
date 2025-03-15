@@ -33,11 +33,11 @@ def redirect_success_exam():
     message = request.args['message']
     return render_template('exam/redirect_success_view.html', message=message)
 
-@app.route('exam/task/error', methods=['GET'])
+@app.route('/exam/task/error', methods=['GET'])
 def redirect_error_exam():
     return render_template('error/redirect_exam_error.html')
 
-@app.route('exa,/item/add', methods=['GET', 'POST'])
+@app.route('/exam/item/add', methods=['GET', 'POST'])
 def add_exam_item():
     if request.method == 'GET':
         qids = list_qid()
